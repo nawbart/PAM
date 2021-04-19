@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        soundPlayer = new SoundPlayer(this);
+       // soundPlayer = new SoundPlayer(this);
 
         scoreLabel = findViewById(R.id.scoreLabel);
         startLabel = findViewById(R.id.startLabel);
@@ -82,21 +82,10 @@ public class MainActivity extends AppCompatActivity {
         bomba.setX(-80.0f);
         bomba.setY(-80.0f);
 
-        startLabel.setVisibility(View.INVISIBLE);
-        boxY = 500;
+        //scoreLabel.setText("Score : " + score);
+        scoreLabel.setText(getString(R.string.score, score));
 
-
-
-
-    } else {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            action_flg = true;
-
-        } else if (event.getAction() == MotionEvent.ACTION_UP) {
-            action_flg = false;
-        }
     }
-
 
     }
 
@@ -155,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
                 boxY <= orangeCenterY && orangeCenterY <= boxY + boxSize) {
             orangeX = -100.0f;
             score += 10;
-            soundPlayer.playHitSound();
+            //soundPlayer.playHitSound();
         }
 
         // Pink
@@ -166,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
                 boxY <= pinkCenterY && pinkCenterY <= boxY + boxSize) {
             pinkX = -100.0f;
             score += 30;
-            soundPlayer.playHitSound();
+            //soundPlayer.playHitSound();
         }
 
         // Black
