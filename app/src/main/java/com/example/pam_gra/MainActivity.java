@@ -2,9 +2,12 @@ package com.example.pam_gra;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -19,12 +22,12 @@ public class MainActivity extends AppCompatActivity {
 
     // Elements
     private TextView scoreLabel, startLabel;
-    private ImageView stworek, punkt, punkt2, bomba;
+    private ImageView box, orange, pink, black;
 
-    private int boxY;
-
-    //Size
-    private int frameHeight, boxSize, screenWidth,screenHeight;
+    // Size
+    private int screenWidth;
+    private int frameHeight;
+    private int boxSize;
 
     // Position
     private float boxY;
@@ -54,14 +57,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-       // soundPlayer = new SoundPlayer(this);
+        soundPlayer = new SoundPlayer(this);
 
         scoreLabel = findViewById(R.id.scoreLabel);
         startLabel = findViewById(R.id.startLabel);
-        stworek = findViewById(R.id.box);
-        punkt = findViewById(R.id.orange);
-        punkt2 = findViewById(R.id.pink);
-        bomba = findViewById(R.id.black);
+        box = findViewById(R.id.box);
+        orange = findViewById(R.id.orange);
+        pink = findViewById(R.id.pink);
+        black = findViewById(R.id.black);
 
         // Screen Size
         WindowManager windowManager = getWindowManager();
@@ -72,52 +75,60 @@ public class MainActivity extends AppCompatActivity {
         screenWidth = size.x;
         int screenHeight = size.y;
 
+        // Nexus 4 width:768 height:1184
+        // Speed box:20, orange:12, pink:20, black:16
+        boxSpeed = Math.round(screenHeight / 60.0f); // 1184 / 60 = 19.733... => 20
+        orangeSpeed = Math.round(screenWidth / 60.0f); // 768 / 60 = 12.8 => 13
+        pinkSpeed = Math.round(screenWidth / 36.0f); // 768 / 36 = 21.333 => 21
+        blackSpeed = Math.round(screenWidth / 45.0f); // 768 / 45 = 17.06... => 17
 
+//        Log.v("SPEED_BOX", boxSpeed + "");
+//        Log.v("SPEED_ORANGE", orangeSpeed + "");
+//        Log.v("SPEED_PINK", pinkSpeed + "");
+//        Log.v("SPEED_BLACK", blackSpeed + "");
 
         // Initial Positions
-        punkt.setX(-80.0f);
-        punkt.setY(-80.0f);
-        punkt2.setX(-80.0f);
-        punkt2.setY(-80.0f);
-        bomba.setX(-80.0f);
-        bomba.setY(-80.0f);
+        orange.setX(-80.0f);
+        orange.setY(-80.0f);
+        pink.setX(-80.0f);
+        pink.setY(-80.0f);
+        black.setX(-80.0f);
+        black.setY(-80.0f);
 
         //scoreLabel.setText("Score : " + score);
         scoreLabel.setText(getString(R.string.score, score));
-
-    }
-
     }
 
     public void changePos() {
+
         hitCheck();
 
         // Orange
         orangeX -= orangeSpeed;
         if (orangeX < 0) {
             orangeX = screenWidth + 20;
-            orangeY = (float) Math.floor(Math.random() * (frameHeight - punkt.getHeight()));
+            orangeY = (float)Math.floor(Math.random() * (frameHeight - orange.getHeight()));
         }
-        punkt.setX(orangeX);
-        punkt.setY(orangeY);
+        orange.setX(orangeX);
+        orange.setY(orangeY);
 
         // Black
         blackX -= blackSpeed;
         if (blackX < 0) {
             blackX = screenWidth + 10;
-            blackY = (float) Math.floor(Math.random() * (frameHeight - bomba.getHeight()));
+            blackY = (float)Math.floor(Math.random() * (frameHeight - black.getHeight()));
         }
-        bomba.setX(blackX);
-        bomba.setY(blackY);
+        black.setX(blackX);
+        black.setY(blackY);
 
         // Pink
         pinkX -= pinkSpeed;
         if (pinkX < 0) {
             pinkX = screenWidth + 5000;
-            pinkY = (float) Math.floor(Math.random() * (frameHeight - punkt2.getHeight()));
+            pinkY = (float)Math.floor(Math.random() * (frameHeight - pink.getHeight()));
         }
-        punkt2.setX(pinkX);
-        punkt2.setY(pinkY);
+        pink.setX(pinkX);
+        pink.setY(pinkY);
 
         // Box
         if (action_flg) {
@@ -131,36 +142,39 @@ public class MainActivity extends AppCompatActivity {
         if (boxY < 0) boxY = 0;
         if (boxY > frameHeight - boxSize) boxY = frameHeight - boxSize;
 
-        stworek.setY(boxY);
+        box.setY(boxY);
+
+        //scoreLabel.setText("Score : " + score);
+        scoreLabel.setText(getString(R.string.score, score));
     }
 
     public void hitCheck() {
 
         // Orange
-        float orangeCenterX = orangeX + punkt.getWidth() / 2.0f;
-        float orangeCenterY = orangeY + punkt.getHeight() / 2.0f;
+        float orangeCenterX = orangeX + orange.getWidth() / 2.0f;
+        float orangeCenterY = orangeY + orange.getHeight() / 2.0f;
 
         if (0 <= orangeCenterX && orangeCenterX <= boxSize &&
                 boxY <= orangeCenterY && orangeCenterY <= boxY + boxSize) {
             orangeX = -100.0f;
             score += 10;
-            //soundPlayer.playHitSound();
+            soundPlayer.playHitSound();
         }
 
         // Pink
-        float pinkCenterX = pinkX + punkt2.getWidth() / 2.0f;
-        float pinkCenterY = pinkY + punkt2.getHeight() / 2.0f;
+        float pinkCenterX = pinkX + pink.getWidth() / 2.0f;
+        float pinkCenterY = pinkY + pink.getHeight() / 2.0f;
 
         if (0 <= pinkCenterX && pinkCenterX <= boxSize &&
                 boxY <= pinkCenterY && pinkCenterY <= boxY + boxSize) {
             pinkX = -100.0f;
             score += 30;
-            //soundPlayer.playHitSound();
+            soundPlayer.playHitSound();
         }
 
         // Black
-        float blackCenterX = blackX + bomba.getWidth() / 2.0f;
-        float blackCenterY = blackY + bomba.getHeight() / 2.0f;
+        float blackCenterX = blackX + black.getWidth() / 2.0f;
+        float blackCenterY = blackY + black.getHeight() / 2.0f;
 
         if (0 <= blackCenterX && blackCenterX <= boxSize &&
                 boxY <= blackCenterY && blackCenterY <= boxY + boxSize) {
@@ -180,10 +194,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-
-
-        @Override
+    @Override
     public boolean onTouchEvent(MotionEvent event) {
 
         if (!start_flg) {
@@ -221,8 +232,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onTouchEvent(event);
     }
+
+    @Override
+    public void onBackPressed() {}
 }
-
-    private void hitCheck() {
-    }
-
