@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.codingwithsara.pam_gra.R;
+
 public class StartActivity extends AppCompatActivity {
 
     @Override

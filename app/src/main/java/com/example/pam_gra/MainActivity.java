@@ -1,12 +1,10 @@
 package com.example.pam_gra;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,6 +12,8 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.codingwithsara.pam_gra.R;
 
 import java.util.Timer;
 import java.util.TimerTask;

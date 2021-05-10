@@ -1,6 +1,4 @@
 package com.example.pam_gra;
-
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -9,6 +7,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
+import com.codingwithsara.pam_gra.R;
 
 public class ResultActivity extends AppCompatActivity {
 

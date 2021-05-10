@@ -6,6 +6,8 @@ import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Build;
 
+import com.codingwithsara.pam_gra.R;
+
 class SoundPlayer {
     private static SoundPool soundPool;
     private static int hitSound, overSound;
@@ -34,6 +36,7 @@ class SoundPlayer {
         soundPool.play(hitSound, 1.0f, 1.0f, 1, 0, 1.0f);
     }
 
-    public void playOverSound() {
+    void playOverSound() {
+        soundPool.play(overSound, 1.0f, 1.0f, 1, 0, 1.0f);
     }
 }
