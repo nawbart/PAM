@@ -14,7 +14,8 @@
         android:layout_height="wrap_content"
         android:text="@string/score"
         android:textSize="18sp"
-        android:padding="10dp"/>
+        android:padding="10dp"
+        android:textColor="?attr/colorPrimaryDark"/>
 
     <FrameLayout
         android:id="@+id/frame"
@@ -27,7 +28,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/tap_to_start"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:textColor="?attr/colorPrimaryDark"/>
 
         <ImageView
             android:id="@+id/box"
