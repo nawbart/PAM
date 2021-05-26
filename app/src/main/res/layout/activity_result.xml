@@ -7,13 +7,15 @@
     android:layout_height="match_parent"
     tools:context=".ResultActivity"
     android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="#19647E">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/result_title"
-        android:textSize="30sp"/>
+        android:textSize="30sp"
+        android:textColor="#37392E"/>
 
     <TextView
         android:id="@+id/scoreLabel"
@@ -21,7 +23,8 @@
         android:layout_height="wrap_content"
         android:text="@string/result_score"
         android:textSize="40sp"
-        android:layout_marginTop="80dp"/>
+        android:layout_marginTop="80dp"
+        android:textColor="#037392E"/>
 
     <TextView
         android:id="@+id/highScoreLabel"
@@ -29,12 +32,15 @@
         android:layout_height="wrap_content"
         android:text="@string/high_score"
         android:textSize="20sp"
-        android:layout_marginTop="80dp"/>
+        android:layout_marginTop="80dp"
+        android:textColor="#37392E"/>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/btn_try_again"
         android:layout_marginTop="50dp"
-        android:onClick="tryAgain"/>
+        android:onClick="tryAgain"
+        android:textColor="#19647E"
+        android:background="#37392E"/>
 </LinearLayout>
